@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ماشین حساب نئونی بتمن 🦇</title>
+  <meta name="description" content="ماشین حساب نئونی بتمن | Batman Neon Calculator | طراحی تاریک و نئونی برای محاسبات مهندسی با سینوس، کسینوس، لگاریتم و ریشه.">
+  <meta name="keywords" content="ماشین حساب بتمن, Batman Calculator, نئونی, ماشین حساب مهندسی, Batcalc, Batcomputer">
+  <meta name="robots" content="index, follow">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+
+    body {
+      background: radial-gradient(circle at center, #000, #0a0a0a);
+      color: #fbbf24;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .neon-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(251, 191, 36, 0.15), transparent 60%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .calculator {
+      position: relative;
+      z-index: 1;
+      width: 340px;
+      background: linear-gradient(145deg, #0f172a, #111827);
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(251, 191, 36, 0.3), inset 0 0 30px #000;
+      border: 1px solid rgba(251, 191, 36, 0.5);
+      padding: 20px;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 28px;
+      color: #facc15;
+      text-shadow: 0 0 10px #fbbf24, 0 0 25px #fde047, 0 0 40px #fde047;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+    }
+
+    #display {
+      width: 100%;
+      height: 60px;
+      border: none;
+      background: #000;
+      color: #0ff;
+      font-size: 26px;
+      text-align: right;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: inset 0 0 15px #00ffff55, 0 0 10px #0ff3;
+      margin-bottom: 15px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    button {
+      background: rgba(30, 41, 59, 0.9);
+      border: none;
+      color: #fbbf24;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-shadow: 0 0 5px #facc15aa;
+      box-shadow: 0 0 10px rgba(251, 191, 36, 0.2);
+    }
+
+    button:hover {
+      background: #fbbf24;
+      color: #000;
+      box-shadow: 0 0 20px #fde047, 0 0 40px #fde047;
+      transform: scale(1.05);
+    }
+
+    .equal {
+      grid-column: span 2;
+      background: #fde047;
+      color: #111;
+      font-weight: bold;
+      text-shadow: none;
+    }
+
+    .clear {
+      background: #dc2626;
+      color: #fff;
+      text-shadow: none;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+      margin-top: 10px;
+      text-shadow: 0 0 5px #fbbf2433;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="neon-glow"></div>
+  <div class="calculator">
+    <div class="logo">🦇 BATCALC</div>
+    <input type="text" id="display" readonly />
+    <div class="buttons">
+      <button class="clear" onclick="clearDisplay()">C</button>
+      <button onclick="delChar()">⌫</button>
+      <button onclick="insert('(')">(</button>
+      <button onclick="insert(')')">)</button>
+      <button onclick="insert('^')">xʸ</button>
+
+      <button onclick="insert('7')">7</button>
+      <button onclick="insert('8')">8</button>
+      <button onclick="insert('9')">9</button>
+      <button onclick="insert('/')">÷</button>
+      <button onclick="insert('sin(')">sin</button>
+
+      <button onclick="insert('4')">4</button>
+      <button onclick="insert('5')">5</button>
+      <button onclick="insert('6')">6</button>
+      <button onclick="insert('*')">×</button>
+      <button onclick="insert('cos(')">cos</button>
+
+      <button onclick="insert('1')">1</button>
+      <button onclick="insert('2')">2</button>
+      <button onclick="insert('3')">3</button>
+      <button onclick="insert('-')">−</button>
+      <button onclick="insert('tan(')">tan</button>
+
+      <button onclick="insert('0')">0</button>
+      <button onclick="insert('.')">.</button>
+      <button onclick="insert('+')">+</button>
+      <button onclick="insert('Math.sqrt(')">√</button>
+      <button onclick="insert('Math.log10(')">log</button>
+
+      <button onclick="insert('Math.PI')">π</button>
+      <button onclick="insert('Math.E')">e</button>
+      <button class="equal" onclick="calculate()">=</button>
+    </div>
+    <footer>⚡ Batman Neon Engineering Tools</footer>
+  </div>
+
+  <script>
+    const display = document.getElementById("display");
+
+    function insert(val) {
+      display.value += val;
+    }
+
+    function clearDisplay() {
+      display.value = "";
+    }
+
+    function delChar() {
+      display.value = display.value.slice(0, -1);
+    }
+
+    function calculate() {
+      try {
+        let expr = display.value
+          .replace(/\^/g, "**")
+          .replace(/sin/g, "Math.sin")
+          .replace(/cos/g, "Math.cos")
+          .replace(/tan/g, "Math.tan")
+          .replace(/log/g, "Math.log10");
+        let result = eval(expr);
+        if (result === Infinity || isNaN(result)) throw "Error";
+        display.value = Number(result.toFixed(10));
+      } catch {
+        display.value = "⚠️ خطا";
+      }
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") calculate();
+      else if (e.key === "Backspace") delChar();
+    });
+  </script>
+</body>
+</html>
